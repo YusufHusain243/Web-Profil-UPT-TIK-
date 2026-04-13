@@ -32,6 +32,7 @@ defineProps({
                     <div class="hidden md:flex items-center space-x-8">
                         <Link :href="route('home')" class="text-sm font-semibold transition-colors" :class="route().current('home') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Home</Link>
                         <Link :href="route('organization')" class="text-sm font-semibold transition-colors" :class="route().current('organization') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Organization</Link>
+                        <Link :href="route('partners')" class="text-sm font-semibold transition-colors" :class="route().current('partners') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Partners</Link>
                         <a href="/#services" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Services</a>
                         <a href="/#projects" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Projects</a>
                         <a href="/#faq" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">FAQ</a>

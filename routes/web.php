@@ -20,6 +20,12 @@ Route::get('/organization', function () {
     ]);
 })->name('organization');
 
+Route::get('/partners', function () {
+    return Inertia::render('Partners', [
+        'canLogin' => Route::has('login'),
+    ]);
+})->name('partners');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
