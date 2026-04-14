@@ -28,14 +28,19 @@ defineProps({
                     </Link>
 
                     <!-- Desktop Nav -->
-                    <div class="hidden md:flex items-center space-x-8">
+                    <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
                         <Link :href="route('home')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('home') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Beranda</Link>
                         <a href="/#about" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Tentang Kami</a>
+                        <a href="/#services" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Layanan</a>
+                        <a href="/#projects" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Portfolio</a>
+                        <a href="/#news" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Berita & Inovasi</a>
+                        <a href="/#helpdesk" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Bantuan</a>
+                        
+                        <!-- Separator line -->
+                        <div class="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-2"></div>
+
                         <Link :href="route('organization')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('organization') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Organisasi</Link>
                         <Link :href="route('partners')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('partners') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Mitra</Link>
-                        <a href="/#services" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Layanan</a>
-                        <a href="/#projects" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Proyek</a>
-                        <a href="/#faq" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Tanya Jawab</a>
                     </div>
 
                     <!-- Login & Theme -->
@@ -93,12 +98,12 @@ defineProps({
                     <div>
                         <h4 class="text-xl font-bold mb-6">Tautan Bermanfaat</h4>
                         <ul class="space-y-3 text-slate-300 text-sm">
-                            <li><a href="/#home" class="hover:text-secondary transition-colors italic">Beranda</a></li>
-                            <li><a href="/#about" class="hover:text-secondary transition-colors italic">Tentang Kami</a></li>
-                            <li><a href="#" class="hover:text-secondary transition-colors italic">SIAKAD UPR</a></li>
-                            <li><a href="#" class="hover:text-secondary transition-colors italic">PPID UPR</a></li>
-                            <li><a href="#" class="hover:text-secondary transition-colors italic">Perpustakaan Online</a></li>
-                            <li><a href="#" class="hover:text-secondary transition-colors italic">Portal Pegawai</a></li>
+                            <li><a href="https://upr.ac.id" target="_blank" class="hover:text-secondary transition-colors">Website Universitas</a></li>
+                            <li><a href="https://sia.upr.ac.id" target="_blank" class="hover:text-secondary transition-colors">SIUBER / SIAKAD</a></li>
+                            <li><a href="https://portal-dosen.upr.ac.id" target="_blank" class="hover:text-secondary transition-colors">Portal Dosen</a></li>
+                            <li><a href="https://portal-mahasiswa.upr.ac.id" target="_blank" class="hover:text-secondary transition-colors">Portal Mahasiswa</a></li>
+                            <li><a href="https://e-sign.upr.ac.id" target="_blank" class="hover:text-secondary transition-colors">E-Sign UPR</a></li>
+                            <li><a href="https://sirema.upr.ac.id" target="_blank" class="hover:text-secondary transition-colors">SIREMA (PMB)</a></li>
                         </ul>
                     </div>
 

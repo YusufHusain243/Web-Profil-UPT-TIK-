@@ -10,7 +10,7 @@ import FaqAccordion from '@/Components/UPA/FaqAccordion.vue';
 import StatCard from '@/Components/UPA/StatCard.vue';
 import ServiceCard from '@/Components/UPA/ServiceCard.vue';
 import StatusBadge from '@/Components/UPA/StatusBadge.vue';
-import { Search, Send, Ticket, ChevronRight, ArrowLeft, CheckCircle2 } from 'lucide-vue-next';
+import { Search, Send, Ticket, ChevronRight, ArrowLeft, CheckCircle2, ChevronLeft, Calendar, Tag } from 'lucide-vue-next';
 
 defineProps({
     canRegister: Boolean,
@@ -289,6 +289,135 @@ const faqs = [
 
 const filteredFaqs = computed(() => {
     return faqs.filter(f => f.category === activeFaqCategory.value);
+});
+
+// News & Innovation Hub Logic
+const newsItems = [
+    {
+        title: "Cybersecurity Alert: Phishing Campaign Targeting University Accounts",
+        category: "Security",
+        date: "5 menit yang lalu",
+        description: "Tim keamanan siber UPA TIK mendeteksi adanya upaya phishing massal yang menargetkan email civitas akademika melalui domain palsu.",
+        imageId: "1550751827-4bd374c3f58b",
+        featured: true
+    },
+    {
+        title: "New High-Performance Computing System Launched",
+        category: "Innovation",
+        date: "2 jam yang lalu",
+        description: "UPA TIK meluncurkan kluster HPC baru untuk mendukung akselerasi penelitian berbasis data besar dan AI bagi dosen dan peneliti.",
+        imageId: "1518770660439-4636190af475",
+        featured: true
+    },
+    {
+        title: "Workshop Nasional: Implementasi Transformasi Digital di PTN",
+        category: "Event",
+        date: "1 hari yang lalu",
+        description: "Rektorat bersama UPA TIK menggelar workshop strategis mengenai percepatan digitalisasi administrasi kampus kelas dunia.",
+        imageId: "1517245386807-bb43f82c33c4"
+    },
+    {
+        title: "Migrasi Cloud Infrastructure: Peningkatan Uptime Layanan 99.9%",
+        category: "Infrastructure",
+        date: "3 hari yang lalu",
+        description: "Kami telah menyelesaikan migrasi infrastruktur ke cloud untuk memastikan seluruh sistem akademik dapat diakses kapan saja tanpa kendala.",
+        imageId: "1451187580459-43490279c0fa"
+    },
+    {
+        title: "Inovasi Mahasiswa: Aplikasi Smart Campus Berbasis AI",
+        category: "Innovation",
+        date: "1 minggu yang lalu",
+        description: "Sekelompok mahasiswa berkolaborasi dengan UPA TIK menciptakan asisten virtual cerdas untuk mempermudah pendaftaran KRS.",
+        imageId: "1581091226815-45a9d2a8a48e"
+    },
+    {
+        title: "Update Keamanan: Enkripsi End-to-End untuk Dokumen E-Sign",
+        category: "Security",
+        date: "10 hari yang lalu",
+        description: "Sistem E-Sign kini dilengkapi dengan standar enkripsi terbaru guna menjamin kerahasiaan dokumen kedinasan universitas.",
+        imageId: "1563986768609-322da13575f3"
+    },
+    {
+        title: "Peningkatan Kapasitas Bandwidth Internasional Kampus",
+        category: "Infrastructure",
+        date: "2 minggu yang lalu",
+        description: "Link internasional kampus kini ditingkatkan menjadi 10Gbps untuk mendukung riset global dan kelas virtual trans-nasional.",
+        imageId: "1544197150-5973ff0a0a55"
+    },
+    {
+        title: "Peluncuran Portal Alumni Terintegrasi DITRACE v2.0",
+        category: "Innovation",
+        date: "3 minggu yang lalu",
+        description: "DITRACE versi terbaru kini hadir dengan fitur analitik karir yang lebih tajam bagi lulusan Universitas Palangka Raya.",
+        imageId: "1460925895917-afdab827c52f"
+    },
+    {
+        title: "Sustainability Tech: Server Room UPA TIK Kini Gunakan Solar Panel",
+        category: "Infrastructure",
+        date: "1 bulan yang lalu",
+        description: "Inisiatif Green Campus dimulai dari UPA TIK dengan pemanfaatan energi terbarukan untuk mendukung operasional pusat data.",
+        imageId: "1509391366360-ec5c03204627"
+    },
+    {
+        title: "Lomba Coding Universitas 2026: Total Hadiah 50 Juta",
+        category: "Event",
+        date: "1 bulan yang lalu",
+        description: "Cari programmer terbaik kampus dalam ajang tahunan Hackathon TIK. Pendaftaran dibuka untuk seluruh fakultas.",
+        imageId: "1517694712202-14dd9538aa97"
+    },
+    {
+        title: "Integrasi SSO: Satu Akun untuk Seluruh Layanan Kampus",
+        category: "Innovation",
+        date: "2 bulan yang lalu",
+        description: "Satu akses akun G-Suite universitas kini bisa digunakan untuk login ke SIAKAD, E-Learning, dan Portal Ortu.",
+        imageId: "1555066931-4365d14bab8c"
+    },
+    {
+        title: "Pengembangan Infrastruktur Jaringan di Area Kampus Baru",
+        category: "Infrastructure",
+        date: "2 bulan yang lalu",
+        description: "Pemasangan fiber optic dan access point Eduroam di area gedung fakultas kedokteran baru telah selesai.",
+        imageId: "1558486012-817176f84c6d"
+    }
+];
+
+const newsSearchQuery = ref("");
+const newsCurrentPage = ref(1);
+const newsItemsPerPage = 6;
+const isNewsExpanded = ref(false);
+
+const filteredNews = computed(() => {
+    if (!newsSearchQuery.value) return newsItems;
+    const query = newsSearchQuery.value.toLowerCase();
+    return newsItems.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.category.toLowerCase().includes(query) ||
+        item.description.toLowerCase().includes(query)
+    );
+});
+
+const totalNewsPages = computed(() => Math.ceil(filteredNews.value.length / newsItemsPerPage));
+
+const paginatedNews = computed(() => {
+    const start = (newsCurrentPage.value - 1) * newsItemsPerPage;
+    const end = start + newsItemsPerPage;
+    return filteredNews.value.slice(start, end);
+});
+
+const getNewsImage = (item) => {
+    return `https://images.unsplash.com/photo-${item.imageId}?auto=format&fit=crop&q=80&w=800`;
+};
+
+const expandNews = () => {
+    isNewsExpanded.value = true;
+    // Scroll to section for better UX
+    setTimeout(() => {
+        document.getElementById('news').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+};
+
+watch(newsSearchQuery, () => {
+    newsCurrentPage.value = 1;
 });
 
 // Helpdesk & Status Logic
@@ -682,61 +811,152 @@ onMounted(() => {
         </section>
 
         <!-- News Section -->
-        <section class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-end justify-between mb-12">
-                <div>
-                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Berita & Inovasi</h2>
-                    <p class="text-slate-500 mt-2">Dapatkan info terbaru seputar teknologi di kampus.</p>
-                </div>
-                <button
-                    class="px-6 py-2 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-primary hover:bg-slate-50 transition-colors">Lihat Semua Berita</button>
-            </div>
+        <section id="news" class="py-24 bg-white dark:bg-slate-900 scroll-mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
+                    <div class="animate-fade-in-up">
+                        <span class="text-primary font-bold text-sm uppercase tracking-widest mb-4 block">Update Terbaru</span>
+                        <h2 class="text-4xl font-bold text-slate-900 dark:text-white">Berita & Inovasi</h2>
+                        <p class="text-slate-500 mt-4 text-lg max-w-xl">Dapatkan informasi terkini seputar transformasi digital dan terobosan teknologi di lingkungan UPR.</p>
+                    </div>
+                    
+                    <div v-if="!isNewsExpanded" class="animate-fade-in-up">
+                        <button
+                            @click="expandNews"
+                            class="group px-8 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-primary hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 flex items-center space-x-3 shadow-sm hover:shadow-xl"
+                        >
+                            <span>Lihat Semua Berita</span>
+                            <ChevronRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Featured News 1 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-3xl mb-6">
-                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop"
-                            class="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute top-4 left-4">
-                            <span
-                                class="px-3 py-1 bg-amber-500 text-white text-[10px] font-bold uppercase rounded-lg">Unggulan</span>
+                    <!-- Search Bar in Expanded Mode -->
+                    <div v-else class="w-full md:w-96 animate-fade-in">
+                        <div class="relative group">
+                            <Search class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
+                            <input 
+                                v-model="newsSearchQuery"
+                                type="text" 
+                                placeholder="Cari berita atau inovasi..."
+                                class="w-full pl-12 pr-4 py-4 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-2xl focus:ring-primary focus:border-primary transition-all text-sm outline-none"
+                            />
                         </div>
                     </div>
-                    <h3
-                        class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-                        Cybersecurity Alert: Phishing Campaign Targeting University Accounts</h3>
-                    <p class="mt-3 text-slate-500 text-sm line-clamp-2">Tim keamanan siber UPA TIK mendeteksi adanya
-                        upaya phishing massal yang menargetkan email civitas akademika...</p>
-                    <div
-                        class="mt-4 flex items-center text-slate-400 text-xs font-medium uppercase tracking-widest leading-none">
-                        <span>5 menit yang lalu</span>
-                        <span class="mx-2 inline-block w-1 h-1 bg-slate-400 rounded-full"></span>
-                        <span>Update Keamanan</span>
-                    </div>
                 </div>
 
-                <!-- Featured News 2 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-3xl mb-6">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
-                            class="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute top-4 left-4">
-                            <span
-                                class="px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase rounded-lg">Innovation</span>
+                <!-- News Grid -->
+                <div class="relative min-h-[500px]">
+                    <Transition name="fade-scale" mode="out-in">
+                        <!-- Summary View (Initial) -->
+                        <div v-if="!isNewsExpanded" key="summary" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div 
+                                v-for="(news, index) in newsItems.filter(n => n.featured).slice(0, 2)" 
+                                :key="news.title"
+                                class="group cursor-pointer animate-fade-in-up"
+                                :style="`animation-delay: ${index * 0.1}s`"
+                            >
+                                <div class="relative overflow-hidden rounded-[2.5rem] mb-8 shadow-lg group-hover:shadow-2xl transition-all duration-500">
+                                    <img :src="getNewsImage(news)" class="w-full h-[350px] object-cover group-hover:scale-110 transition-transform duration-700 font-display" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                                    <div class="absolute top-6 left-6 flex space-x-2">
+                                        <span class="px-4 py-2 bg-primary/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-xl tracking-wider">{{ news.category }}</span>
+                                        <span v-if="news.featured" class="px-4 py-2 bg-amber-500/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-xl tracking-wider">Unggulan</span>
+                                    </div>
+                                </div>
+                                <h3 class="text-3xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors leading-tight mb-4">{{ news.title }}</h3>
+                                <p class="text-slate-500 dark:text-slate-400 text-lg line-clamp-2 leading-relaxed">{{ news.description }}</p>
+                                <div class="mt-6 flex items-center text-slate-400 text-xs font-bold uppercase tracking-widest bg-slate-50 dark:bg-slate-800 w-max px-4 py-2 rounded-lg">
+                                    <Calendar class="w-4 h-4 mr-2" />
+                                    <span>{{ news.date }}</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <h3
-                        class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-                        New High-Performance Computing System Launched</h3>
-                    <p class="mt-3 text-slate-500 text-sm line-clamp-2">UPA TIK meluncurkan kluster HPC baru untuk
-                        mendukung akselerasi penelitian berbasis data besar dan AI bagi dosen...</p>
-                    <div
-                        class="mt-4 flex items-center text-slate-400 text-xs font-medium uppercase tracking-widest leading-none">
-                        <span>2 jam yang lalu</span>
-                        <span class="mx-2 inline-block w-1 h-1 bg-slate-400 rounded-full"></span>
-                        <span>Infrastruktur</span>
-                    </div>
+
+                        <!-- Full List View (Paginated) -->
+                        <div v-else key="full" class="space-y-16">
+                            <TransitionGroup 
+                                name="fade-grid"
+                                tag="div"
+                                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                            >
+                                <div 
+                                    v-for="news in paginatedNews" 
+                                    :key="news.title"
+                                    class="bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 p-4 hover:shadow-2xl hover:border-primary/20 transition-all duration-500 group cursor-pointer"
+                                >
+                                    <div class="relative overflow-hidden rounded-2xl mb-6 aspect-video">
+                                        <img :src="getNewsImage(news)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                        <div class="absolute top-3 left-3">
+                                            <span class="px-3 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-primary dark:text-secondary text-[10px] font-black uppercase rounded-lg shadow-sm border border-slate-100 dark:border-slate-800">{{ news.category }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="px-2 pb-2">
+                                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors line-clamp-2 leading-snug">{{ news.title }}</h4>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-3 mb-6 leading-relaxed">{{ news.description }}</p>
+                                        <div class="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest border-t border-slate-50 dark:border-slate-700/50 pt-4">
+                                            <span class="flex items-center"><Calendar class="w-3 h-3 mr-1.5" /> {{ news.date }}</span>
+                                            <span class="text-primary flex items-center group-hover:translate-x-1 transition-transform cursor-pointer">Baca <ChevronRight class="w-3 h-3 ml-0.5" /></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </TransitionGroup>
+
+                            <!-- Empty State -->
+                            <div v-if="paginatedNews.length === 0" class="py-20 text-center animate-fade-in">
+                                <Search class="w-16 h-16 text-slate-200 dark:text-slate-800 mx-auto mb-6" />
+                                <h3 class="text-2xl font-bold text-slate-600 dark:text-slate-400">Berita tidak ditemukan</h3>
+                                <p class="text-slate-400 mt-2">Coba gunakan kata kunci lainnya.</p>
+                                <button @click="newsSearchQuery = ''" class="mt-8 text-primary font-bold hover:underline">Hapus Pencarian</button>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div v-if="totalNewsPages > 1" class="flex flex-col sm:flex-row items-center justify-between pt-12 border-t border-slate-100 dark:border-slate-700/50 gap-6">
+                                <div class="text-sm text-slate-500 font-medium">
+                                    Menampilkan <span class="text-slate-900 dark:text-white font-bold">{{ newsCurrentPage }}</span> dari <span class="text-slate-900 dark:text-white font-bold">{{ totalNewsPages }}</span> Halaman
+                                </div>
+                                
+                                <div class="flex items-center space-x-2">
+                                    <button 
+                                        @click="newsCurrentPage--"
+                                        :disabled="newsCurrentPage === 1"
+                                        class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                    >
+                                        <ChevronLeft class="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                                    </button>
+
+                                    <div class="flex space-x-2">
+                                        <button 
+                                            v-for="page in totalNewsPages" 
+                                            :key="page"
+                                            @click="newsCurrentPage = page"
+                                            class="w-12 h-12 rounded-xl border font-bold transition-all duration-300"
+                                            :class="newsCurrentPage === page 
+                                                ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-110' 
+                                                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-primary/50'"
+                                        >
+                                            {{ page }}
+                                        </button>
+                                    </div>
+
+                                    <button 
+                                        @click="newsCurrentPage++"
+                                        :disabled="newsCurrentPage === totalNewsPages"
+                                        class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                    >
+                                        <ChevronRight class="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                                    </button>
+                                </div>
+
+                                <button 
+                                    @click="isNewsExpanded = false"
+                                    class="hidden sm:flex items-center space-x-2 text-sm font-bold text-slate-500 hover:text-primary transition-colors"
+                                >
+                                    <ArrowLeft class="w-4 h-4" />
+                                    <span>Tutup List</span>
+                                </button>
+                            </div>
+                        </div>
+                    </Transition>
                 </div>
             </div>
         </section>
