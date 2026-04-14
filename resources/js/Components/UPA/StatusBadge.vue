@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue';
 import { CheckCircle2, AlertCircle, Clock, Loader2 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -37,7 +38,7 @@ const statusConfig = {
     }
 };
 
-const config = statusConfig[props.status] || statusConfig.operational;
+const config = computed(() => statusConfig[props.status] || statusConfig.operational);
 </script>
 
 <template>

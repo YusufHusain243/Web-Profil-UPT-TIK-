@@ -154,6 +154,11 @@ const selectedProject = ref(null);
 const displayLimit = ref(8);
 const isExpanded = ref(false);
 
+const filteredProjects = computed(() => {
+    if (activeCategory.value === "Semua") return projects;
+    return projects.filter(p => p.category === activeCategory.value);
+});
+
 // Image Fallback Engine
 const getProjectImage = (project) => {
     // If a manual override image exists, use it
