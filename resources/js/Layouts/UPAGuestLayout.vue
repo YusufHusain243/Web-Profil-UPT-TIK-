@@ -5,7 +5,6 @@ import ThemeToggle from '@/Components/UPA/ThemeToggle.vue';
 
 defineProps({
     title: String,
-    canLogin: Boolean,
 });
 </script>
 
@@ -18,9 +17,9 @@ defineProps({
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-20 items-center">
                     <!-- Logo -->
-                    <Link href="/" class="flex items-center space-x-3 group">
+                    <Link href="/" prefetch class="flex items-center space-x-3 group">
                         <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <img src="https://upload.wikimedia.org/wikipedia/id/8/83/Logo_Universitas_Palangka_Raya.png" alt="UPR Logo" class="w-7 h-7" />
+                            <img src="/images/logo-upr.png" alt="UPR Logo" class="w-7 h-7" />
                         </div>
                         <div>
                             <span class="text-xl font-bold text-primary dark:text-white block leading-none">UPA TIK</span>
@@ -30,9 +29,10 @@ defineProps({
 
                     <!-- Desktop Nav -->
                     <div class="hidden md:flex items-center space-x-8">
-                        <Link :href="route('home')" class="text-sm font-semibold transition-colors" :class="route().current('home') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Home</Link>
-                        <Link :href="route('organization')" class="text-sm font-semibold transition-colors" :class="route().current('organization') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Organization</Link>
-                        <Link :href="route('partners')" class="text-sm font-semibold transition-colors" :class="route().current('partners') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Partners</Link>
+                        <Link :href="route('home')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('home') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Home</Link>
+                        <a href="/#about" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">About Us</a>
+                        <Link :href="route('organization')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('organization') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Organization</Link>
+                        <Link :href="route('partners')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('partners') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Partners</Link>
                         <a href="/#services" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Services</a>
                         <a href="/#projects" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Projects</a>
                         <a href="/#faq" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">FAQ</a>
@@ -41,9 +41,7 @@ defineProps({
                     <!-- Login & Theme -->
                     <div class="flex items-center space-x-4">
                         <ThemeToggle />
-                        <Link v-if="canLogin" :href="route('login')" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-primary dark:text-white font-bold rounded-xl hover:bg-slate-200 transition-colors text-sm">
-                            Login
-                        </Link>
+
                     </div>
                 </div>
             </div>
@@ -61,7 +59,7 @@ defineProps({
                     <div class="space-y-6">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                                <img src="https://tik.upr.ac.id/images/upr.png" alt="UPR Logo" class="w-7 h-7" />
+                                <img src="/images/logo-upr.png" alt="UPR Logo" class="w-7 h-7" />
                             </div>
                             <span class="text-2xl font-bold">UPA TIK UPR</span>
                         </div>
@@ -95,7 +93,8 @@ defineProps({
                     <div>
                         <h4 class="text-xl font-bold mb-6">Useful Links</h4>
                         <ul class="space-y-3 text-slate-300 text-sm">
-                            <li><a href="#" class="hover:text-secondary transition-colors italic">Home</a></li>
+                            <li><a href="/#home" class="hover:text-secondary transition-colors italic">Home</a></li>
+                            <li><a href="/#about" class="hover:text-secondary transition-colors italic">About Us</a></li>
                             <li><a href="#" class="hover:text-secondary transition-colors italic">SIAKAD UPR</a></li>
                             <li><a href="#" class="hover:text-secondary transition-colors italic">PPID UPR</a></li>
                             <li><a href="#" class="hover:text-secondary transition-colors italic">Library Online</a></li>

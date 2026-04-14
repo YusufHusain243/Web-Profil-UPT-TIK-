@@ -36,8 +36,8 @@ const values = [
                     </div>
 
                     <div class="mt-12 flex items-center space-x-8">
-                        <div class="flex -space-x-3 overflow-hidden">
-                            <img v-for="i in 4" :key="i" :src="`https://i.pravatar.cc/100?img=${i+10}`" class="inline-block h-12 w-12 rounded-full ring-4 ring-white dark:ring-slate-900" />
+                        <div class="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full border-2 border-primary/20">
+                            <CheckCircle2 class="w-6 h-6 text-primary" />
                         </div>
                         <div>
                             <div class="text-slate-900 dark:text-white font-bold">Tim Ahli Profesional</div>
@@ -52,10 +52,11 @@ const values = [
                     <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
                     
                     <div class="relative rounded-[2rem] overflow-hidden shadow-2xl skew-y-1 hover:skew-y-0 transition-transform duration-500">
-                        <img src="https://images.unsplash.com/photo-1522071823991-b19c77663c17?q=80&w=2070&auto=format&fit=crop" class="w-full h-[500px] object-cover" alt="UPA TIK Team" />
-                        <div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-8 left-8 right-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
-                            <p class="text-white font-medium italic">"Teknologi bukan hanya alat, tapi jembatan menuju keunggulan dunia akademik."</p>
+                        <img src="/images/upr-building.jpg" class="w-full h-[500px] object-cover" alt="Gedung UPR" />
+                        <div class="absolute inset-0 bg-gradient-to-b from-primary/60 via-transparent to-transparent"></div>
+                        <div class="absolute top-8 left-8 right-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col items-center">
+                            <img src="/images/logo-upr.png" class="w-12 h-12 mb-4 drop-shadow-lg" alt="Logo UPR" />
+                            <p class="text-white font-medium italic text-center">"Teknologi bukan hanya alat, tapi jembatan menuju keunggulan dunia akademik."</p>
                         </div>
                     </div>
                 </div>

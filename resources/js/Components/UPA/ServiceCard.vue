@@ -1,5 +1,5 @@
 <script setup>
-import { GraduationCap, Network, Cloud } from 'lucide-vue-next';
+import { GraduationCap, Network, Cloud, Server, Code2, Settings, Mail } from 'lucide-vue-next';
 
 defineProps({
     title: String,
@@ -11,6 +11,10 @@ const icons = {
     academic: GraduationCap,
     network: Network,
     cloud: Cloud,
+    server: Server,
+    development: Code2,
+    maintenance: Settings,
+    workspace: Mail,
 };
 </script>
 

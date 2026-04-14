@@ -7,21 +7,21 @@ const slides = [
         tag: "Inovasi Digital",
         title: "Pusat Inovasi Teknologi UPR",
         description: "Mendorong keunggulan akademik melalui infrastruktur digital terdepan untuk seluruh civitas akademika.",
-        image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/digital-innovation.png",
         cta: "Layanan Kami",
     },
     {
         tag: "Konektivitas",
         title: "Jaringan Kampus Berkecepatan Tinggi",
         description: "Akses Wi-Fi luas dan stabil di seluruh area kampus Tanjung Nyaho untuk mendukung produktivitas Anda.",
-        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/network-infrastructure.png",
         cta: "Cek Coverage",
     },
     {
         tag: "Dukungan Teknis",
         title: "Pelayanan Terpadu Satu Pintu",
         description: "Butuh bantuan IT? Tim ahli kami siap membantu kendala teknis Anda melalui Portal Support TIK.",
-        image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/technical-support.png",
         cta: "Ajukan Bantuan",
     }
 ];

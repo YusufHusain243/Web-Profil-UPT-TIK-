@@ -7,7 +7,6 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
@@ -16,13 +15,11 @@ Route::get('/', function () {
 
 Route::get('/organization', function () {
     return Inertia::render('Organization', [
-        'canLogin' => Route::has('login'),
     ]);
 })->name('organization');
 
 Route::get('/partners', function () {
     return Inertia::render('Partners', [
-        'canLogin' => Route::has('login'),
     ]);
 })->name('partners');
 

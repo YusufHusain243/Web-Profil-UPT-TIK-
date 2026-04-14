@@ -4,7 +4,6 @@ import UPAGuestLayout from '@/Layouts/UPAGuestLayout.vue';
 import { Mail, Linkedin, Twitter } from 'lucide-vue-next';
 
 defineProps({
-    canLogin: Boolean,
 });
 
 const organization = {
@@ -46,7 +45,7 @@ const organization = {
 </script>
 
 <template>
-    <UPAGuestLayout title="Struktur Organisasi" :canLogin="canLogin">
+    <UPAGuestLayout title="Struktur Organisasi">
         <!-- Header -->
         <section class="relative pt-40 pb-20 bg-primary overflow-hidden">
             <div class="absolute inset-0 opacity-10">

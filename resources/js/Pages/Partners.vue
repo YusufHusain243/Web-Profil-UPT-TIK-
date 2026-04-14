@@ -14,7 +14,6 @@ import {
 } from 'lucide-vue-next';
 
 defineProps({
-    canLogin: Boolean,
 });
 
 const partners = [
@@ -63,7 +62,7 @@ const bentoItems = [
 <template>
     <Head title="Partners" />
 
-    <UPAGuestLayout :canLogin="canLogin" title="Partners">
+    <UPAGuestLayout title="Partners">
         <div class="relative pt-20 pb-20 overflow-hidden">
             <!-- Background Decoration -->
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
