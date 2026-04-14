@@ -18,7 +18,7 @@ defineProps({
 
 const partners = [
     {
-        category: 'Institutional Partners',
+        category: 'Mitra Institusional',
         items: [
             { name: 'KEMENDIKBUDRISTEK', description: 'Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi', color: 'bg-blue-500', icon: Building2 },
             { name: 'Universitas Palangka Raya', description: 'Induk Institusi Pendidikan Tinggi Terbesar di Kalteng', color: 'bg-primary', icon: GraduationCap },
@@ -26,7 +26,7 @@ const partners = [
         ]
     },
     {
-        category: 'Technology Partners',
+        category: 'Mitra Teknologi',
         items: [
             { name: 'Cisco Networking', description: 'Partner Infrastruktur Jaringan & Keamanan Data', color: 'bg-blue-600', icon: Cpu },
             { name: 'Google for Education', description: 'Kolaborasi Layanan Cloud & Produktivitas Akademik', color: 'bg-green-500', icon: Globe },
@@ -38,19 +38,19 @@ const partners = [
 
 const bentoItems = [
     { 
-        title: 'Strategic Alliances', 
+        title: 'Aliansi Strategis', 
         desc: 'Membangun ekosistem digital bersama institusi global.', 
         icon: Handshake, 
         class: 'md:col-span-2 md:row-span-1 bg-primary text-white' 
     },
     { 
-        title: 'Regional Impact', 
+        title: 'Dampak Regional', 
         desc: 'Mendukung digitalisasi pemerintahan daerah di Kalimantan Tengah.', 
         icon: Globe, 
         class: 'bg-secondary text-primary' 
     },
     { 
-        title: 'Global Standards', 
+        title: 'Standar Global', 
         desc: 'Sertifikasi internasional untuk mahasiswa.', 
         icon: ShieldCheck, 
         class: 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
@@ -60,9 +60,9 @@ const bentoItems = [
 </script>
 
 <template>
-    <Head title="Partners" />
+    <Head title="Mitra" />
 
-    <UPAGuestLayout title="Partners">
+    <UPAGuestLayout title="Mitra">
         <div class="relative pt-20 pb-20 overflow-hidden">
             <!-- Background Decoration -->
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
@@ -75,10 +75,10 @@ const bentoItems = [
                 <div class="text-center mb-16 space-y-4">
                     <div class="inline-flex items-center space-x-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20">
                         <Handshake class="w-4 h-4 text-primary" />
-                        <span class="text-xs font-bold text-primary uppercase tracking-widest">Our Ecosystem</span>
+                        <span class="text-xs font-bold text-primary uppercase tracking-widest">Ekosistem Kami</span>
                     </div>
                     <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
-                        Our Trusted <span class="text-primary tracking-tighter italic">Partners</span>
+                        <span class="text-primary tracking-tighter italic">Mitra</span> Terpercaya Kami
                     </h1>
                     <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
                         Kolaborasi strategis dengan berbagai institusi dan pemimpin teknologi industri untuk menghadirkan inovasi digital terbaik di lingkungan kampus.
@@ -119,7 +119,7 @@ const bentoItems = [
                                     {{ partner.description }}
                                 </p>
                                 <div class="flex items-center text-xs font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
-                                    <span>Learn More</span>
+                                    <span>Pelajari Selengkapnya</span>
                                     <ExternalLink class="w-3 h-3 ml-2" />
                                 </div>
                             </div>
@@ -133,7 +133,7 @@ const bentoItems = [
                     <h2 class="text-3xl font-bold mb-6">Tertarik berkolaborasi dengan UPA TIK?</h2>
                     <p class="text-slate-400 dark:text-blue-100 mb-10 max-w-xl mx-auto">Kami terbuka untuk peluang kerja sama baru dalam pengembangan ekosistem digital dan inovasi teknologi.</p>
                     <button class="px-8 py-4 bg-secondary text-primary text-lg font-black rounded-2xl hover:scale-105 transition-transform">
-                        CONTACT OUR PARTNERSHIP TEAM
+                        HUBUNGI TIM KEMITRAAN KAMI
                     </button>
                 </div>
             </div>

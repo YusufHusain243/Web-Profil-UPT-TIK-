@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppStatusController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+Route::get('/api/status-check', [AppStatusController::class, 'check'])->name('api.status.check');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

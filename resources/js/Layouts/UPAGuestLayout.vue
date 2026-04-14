@@ -29,13 +29,13 @@ defineProps({
 
                     <!-- Desktop Nav -->
                     <div class="hidden md:flex items-center space-x-8">
-                        <Link :href="route('home')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('home') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Home</Link>
-                        <a href="/#about" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">About Us</a>
-                        <Link :href="route('organization')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('organization') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Organization</Link>
-                        <Link :href="route('partners')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('partners') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Partners</Link>
-                        <a href="/#services" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Services</a>
-                        <a href="/#projects" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Projects</a>
-                        <a href="/#faq" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">FAQ</a>
+                        <Link :href="route('home')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('home') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Beranda</Link>
+                        <a href="/#about" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Tentang Kami</a>
+                        <Link :href="route('organization')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('organization') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Organisasi</Link>
+                        <Link :href="route('partners')" prefetch class="text-sm font-semibold transition-colors" :class="route().current('partners') ? 'text-primary dark:text-white border-b-2 border-primary pb-1' : 'text-slate-600 dark:text-slate-400 hover:text-primary'">Mitra</Link>
+                        <a href="/#services" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Layanan</a>
+                        <a href="/#projects" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Proyek</a>
+                        <a href="/#faq" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">Tanya Jawab</a>
                     </div>
 
                     <!-- Login & Theme -->
@@ -73,7 +73,7 @@ defineProps({
                     </div>
 
                     <div>
-                        <h4 class="text-xl font-bold mb-6">Contact Us</h4>
+                        <h4 class="text-xl font-bold mb-6">Hubungi Kami</h4>
                         <ul class="space-y-4">
                             <li class="flex items-start space-x-3 text-slate-300">
                                 <MapPin class="w-5 h-5 text-secondary shrink-0" />
@@ -91,32 +91,32 @@ defineProps({
                     </div>
 
                     <div>
-                        <h4 class="text-xl font-bold mb-6">Useful Links</h4>
+                        <h4 class="text-xl font-bold mb-6">Tautan Bermanfaat</h4>
                         <ul class="space-y-3 text-slate-300 text-sm">
-                            <li><a href="/#home" class="hover:text-secondary transition-colors italic">Home</a></li>
-                            <li><a href="/#about" class="hover:text-secondary transition-colors italic">About Us</a></li>
+                            <li><a href="/#home" class="hover:text-secondary transition-colors italic">Beranda</a></li>
+                            <li><a href="/#about" class="hover:text-secondary transition-colors italic">Tentang Kami</a></li>
                             <li><a href="#" class="hover:text-secondary transition-colors italic">SIAKAD UPR</a></li>
                             <li><a href="#" class="hover:text-secondary transition-colors italic">PPID UPR</a></li>
-                            <li><a href="#" class="hover:text-secondary transition-colors italic">Library Online</a></li>
-                            <li><a href="#" class="hover:text-secondary transition-colors italic">Staff Portal</a></li>
+                            <li><a href="#" class="hover:text-secondary transition-colors italic">Perpustakaan Online</a></li>
+                            <li><a href="#" class="hover:text-secondary transition-colors italic">Portal Pegawai</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 class="text-xl font-bold mb-6">Newsletter</h4>
+                        <h4 class="text-xl font-bold mb-6">Buletin</h4>
                         <p class="text-slate-300 text-sm mb-4">Dapatkan update terkini seputar layanan TIK.</p>
                         <div class="flex space-x-2">
-                            <input type="email" placeholder="Email address" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm focus:ring-secondary focus:border-secondary" />
+                            <input type="email" placeholder="Alamat email" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm focus:ring-secondary focus:border-secondary" />
                             <button class="p-3 bg-secondary text-primary rounded-xl font-bold"><Send class="w-5 h-5" /></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-medium uppercase tracking-[0.2em]">
-                    <p>&copy; 2026 UPA TIK Universitas Palangka Raya. All Rights Reserved.</p>
+                    <p>&copy; 2026 UPA TIK Universitas Palangka Raya. Hak Cipta Dilindungi.</p>
                     <div class="mt-4 md:mt-0 flex space-x-6">
-                        <a href="#" class="hover:text-white">Privacy Policy</a>
-                        <a href="#" class="hover:text-white">Terms of Service</a>
+                        <a href="#" class="hover:text-white">Kebijakan Privasi</a>
+                        <a href="#" class="hover:text-white">Syarat dan Ketentuan</a>
                     </div>
                 </div>
             </div>

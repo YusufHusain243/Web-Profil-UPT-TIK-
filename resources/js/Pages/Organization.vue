@@ -71,7 +71,7 @@ const organization = {
                     <div class="max-w-md w-full text-center">
                         <div class="relative inline-block mb-8">
                             <div class="absolute inset-0 bg-primary/20 rounded-full blur-2xl group-hover:bg-primary/40 transition-all duration-500"></div>
-                            <img :src="organization.head.image" class="relative w-48 h-48 rounded-full border-4 border-white dark:border-slate-800 shadow-2xl object-cover" alt="Head of Unit" />
+                            <img :src="organization.head.image" class="relative w-48 h-48 rounded-full border-4 border-white dark:border-slate-800 shadow-2xl object-cover" alt="Kepala Unit" />
                         </div>
                         <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">{{ organization.head.name }}</h2>
                         <span class="px-4 py-1 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded-full mb-6 inline-block">{{ organization.head.role }}</span>
@@ -92,7 +92,7 @@ const organization = {
                 <div class="flex justify-center mb-24 animate-fade-in-up" style="animation-delay: 0.3s;">
                     <div class="max-w-md w-full text-center">
                         <div class="relative inline-block mb-8">
-                            <img :src="organization.secretary.image" class="relative w-40 h-40 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover" alt="Secretary" />
+                            <img :src="organization.secretary.image" class="relative w-40 h-40 rounded-full border-4 border-white dark:border-slate-800 shadow-xl object-cover" alt="Sekretaris" />
                         </div>
                         <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">{{ organization.secretary.name }}</h2>
                         <span class="px-4 py-1 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-widest rounded-full mb-4 inline-block">{{ organization.secretary.role }}</span>
