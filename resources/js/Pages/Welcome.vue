@@ -11,12 +11,60 @@ import FaqAccordion from '@/Components/UPA/FaqAccordion.vue';
 import StatCard from '@/Components/UPA/StatCard.vue';
 import ServiceCard from '@/Components/UPA/ServiceCard.vue';
 import StatusBadge from '@/Components/UPA/StatusBadge.vue';
-import { Search, Send, Ticket, ChevronRight, ArrowLeft, CheckCircle2, ChevronLeft, Calendar, Tag } from 'lucide-vue-next';
+import { Search, Send, Ticket, ChevronRight, ArrowLeft, CheckCircle2, ChevronLeft, Calendar, Tag, Star, Quote } from 'lucide-vue-next';
 import { projects, projectCategories, getProjectImage } from '@/data/projects.js';
 import { allNews, getNewsImage } from '@/data/news.js';
 import { faqCategories, faqs, helpCategories } from '@/data/faqs.js';
 
-const categories = projectCategories;
+const testimonials = [
+    {
+        name: 'Prof. Dr. Ir. Harun Sitepu, M.Sc.',
+        role: 'Dekan Fakultas Teknik',
+        avatar: 'https://i.pravatar.cc/150?img=33',
+        rating: 5,
+        text: 'Sejak sistem SIUBER terintegrasi, pengelolaan data akademik di Fakultas Teknik menjadi jauh lebih efisien. Waktu pemrosesan data wisuda yang dulu memakan berhari-hari kini bisa diselesaikan dalam hitungan jam. Luar biasa.',
+    },
+    {
+        name: 'Anisa Kurniawati',
+        role: 'Mahasiswi Akuntansi, Angkatan 2022',
+        avatar: 'https://i.pravatar.cc/150?img=47',
+        rating: 5,
+        text: 'Fitur Eduroam sangat membantu. Saya bisa akses jurnal internasional dan mengerjakan tugas dari mana saja di dalam kampus tanpa khawatir kuota habis. Tim TIK juga sangat responsif saat saya ada pertanyaan.',
+    },
+    {
+        name: 'Dr. Rini Setiawati, M.Pd.',
+        role: 'Dosen FKIP, Koordinator e-Learning',
+        avatar: 'https://i.pravatar.cc/150?img=23',
+        rating: 5,
+        text: 'Dukungan UPA TIK dalam implementasi platform e-learning sangat profesional. Pelatihan Microsoft 365 yang diberikan benar-benar mengubah cara saya mengajar — lebih interaktif dan terdokumentasi dengan baik.',
+    },
+    {
+        name: 'Andi Saputra',
+        role: 'Mahasiswa Ilmu Komputer, Angkatan 2021',
+        avatar: 'https://i.pravatar.cc/150?img=60',
+        rating: 4,
+        text: 'Portal helpdesk sangat memudahkan pelaporan masalah teknis. Tiket saya biasanya ditindaklanjuti dalam 1-2 hari kerja. Semoga ke depannya ada fitur live chat juga untuk masalah yang lebih mendesak.',
+    },
+    {
+        name: 'Ir. Bambang Kristianto, M.T.',
+        role: 'Kepala Biro Administrasi Akademik',
+        avatar: 'https://i.pravatar.cc/150?img=12',
+        rating: 5,
+        text: 'Integrasi sistem e-sign dan SIUBER telah memangkas birokrasi administrasi secara signifikan. Dokumen-dokumen penting kini dapat ditandatangani dan diproses secara digital, menghemat waktu dan sumber daya.',
+    },
+    {
+        name: 'Maya Sari Dewi',
+        role: 'Staf Administrasi FISIP',
+        avatar: 'https://i.pravatar.cc/150?img=37',
+        rating: 4,
+        text: 'Sistem absensi digital yang dikembangkan UPA TIK sangat membantu monitoring kehadiran mahasiswa. Dashboard rekap kehadiran real-time memudahkan pekerjaan administrasi kami setiap harinya.',
+    },
+];
+
+const props = defineProps({
+    slides: { type: Array, default: () => [] },
+});
+
 const activeCategory = ref("Semua");
 const isModalOpen = ref(false);
 const selectedProject = ref(null);
@@ -150,7 +198,7 @@ onUnmounted(() => {
     <UPAGuestLayout>
         <!-- Hero Carousel Section -->
         <div id="home">
-            <HeroCarousel />
+            <HeroCarousel :slides="props.slides" />
         </div>
 
         <!-- Impact Stats -->
@@ -617,6 +665,52 @@ onUnmounted(() => {
                             </div>
                         </div>
                     </Transition>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-24 bg-slate-50 dark:bg-slate-900/50 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-primary dark:text-secondary font-bold text-sm uppercase tracking-widest mb-4 block">Suara Pengguna</span>
+                    <h2 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">Testimoni Stakeholder</h2>
+                    <p class="text-slate-500 max-w-xl mx-auto leading-relaxed">Apa yang dirasakan civitas akademika UPR tentang layanan digital yang kami kembangkan.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div
+                        v-for="(t, index) in testimonials"
+                        :key="index"
+                        class="bg-white dark:bg-slate-800 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-500 group flex flex-col"
+                    >
+                        <!-- Quote Icon -->
+                        <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <Quote class="w-5 h-5 text-primary" />
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="flex gap-1 mb-4">
+                            <Star
+                                v-for="s in 5"
+                                :key="s"
+                                class="w-4 h-4"
+                                :class="s <= t.rating ? 'text-amber-400 fill-amber-400' : 'text-slate-200 dark:text-slate-700'"
+                            />
+                        </div>
+
+                        <!-- Text -->
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-6 italic">"{{ t.text }}"</p>
+
+                        <!-- Author -->
+                        <div class="flex items-center gap-4 pt-6 border-t border-slate-50 dark:border-slate-700/50">
+                            <img :src="t.avatar" :alt="t.name" class="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20 group-hover:ring-primary/40 transition-colors" />
+                            <div>
+                                <p class="font-bold text-slate-900 dark:text-white text-sm">{{ t.name }}</p>
+                                <p class="text-[11px] text-slate-400 font-medium">{{ t.role }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
