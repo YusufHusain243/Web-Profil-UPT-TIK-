@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
+import { Link } from '@inertiajs/vue3';
 import UPAGuestLayout from '@/Layouts/UPAGuestLayout.vue';
 import HeroCarousel from '@/Components/UPA/HeroCarousel.vue';
 import AboutSection from '@/Components/UPA/AboutSection.vue';
@@ -11,143 +12,11 @@ import StatCard from '@/Components/UPA/StatCard.vue';
 import ServiceCard from '@/Components/UPA/ServiceCard.vue';
 import StatusBadge from '@/Components/UPA/StatusBadge.vue';
 import { Search, Send, Ticket, ChevronRight, ArrowLeft, CheckCircle2, ChevronLeft, Calendar, Tag } from 'lucide-vue-next';
+import { projects, projectCategories, getProjectImage } from '@/data/projects.js';
+import { allNews, getNewsImage } from '@/data/news.js';
+import { faqCategories, faqs, helpCategories } from '@/data/faqs.js';
 
-defineProps({
-    canRegister: Boolean,
-});
-
-const projects = [
-    {
-        title: "SIUBER (SIA)",
-        category: "Akademik",
-        description: "Sistem Informasi Akademik terintegrasi untuk mahasiswa, dosen, dan staf administrasi (KRS, KHS, Pembayaran). SIUBER menangani siklus hidup akademik lengkap, mulai dari pendaftaran mahasiswa baru (SIREMA), pengarsipan data, pengisian KRS, hingga pemantauan kelulusan dan ijazah digital.",
-        url: "https://sia.upr.ac.id",
-        imageId: "1498243639311-f3b5541cb427",
-        keywords: "academic, graduation, study"
-    },
-    {
-        title: "SIREMA",
-        category: "Akademik",
-        description: "Sistem Registrasi Mahasiswa Baru (MABA) Universitas Palangka Raya. SIREMA adalah pintu gerbang awal bagi calon mahasiswa, mengelola validasi dokumen, verifikasi biodata, hingga penetapan NIM secara otomatis.",
-        url: "https://sirema.upr.ac.id",
-        imageId: "1486312338219-ce68d2c6f44d",
-        keywords: "registration, laptop, office"
-    },
-    {
-        title: "E-Learning",
-        category: "Akademik",
-        description: "Platform pembelajaran daring (LMS) berbasis Moodle untuk mendukung perkuliauh daring dan daring. Memfasilitasi distribusi materi, kuis online, kelas virtual, dan forum diskusi civitas akademika.",
-        url: "https://e-learning.upr.ac.id",
-        imageId: "1524995997946-a1c2e315a42f",
-        keywords: "online-learning, education, library"
-    },
-    {
-        title: "E-Sign",
-        category: "Institusi",
-        description: "Layanan Tanda Tangan Elektronik (TTE) resmi yang terintegrasi dengan BSRE (Balai Sertifikasi Elektronik). Menjamin keaslian dan legalitas dokumen digital di lingkungan Universitas Palangka Raya.",
-        url: "https://e-sign.upr.ac.id",
-        imageId: "1563986768609-322da13575f3",
-        keywords: "security, digital-signature, verify"
-    },
-    {
-        title: "Wisuda",
-        category: "Akademik",
-        description: "Sistem pendaftaran wisuda dan penulisan ijazah digital Universitas Palangka Raya. Mengelola validasi predikat kelulusan, pendaftaran seremoni, hingga sinkronisasi data ke pangkalan data PT.",
-        url: "https://wisuda.upr.ac.id",
-        imageId: "1523240795612-9a054b0db644",
-        keywords: "graduation, success, celebration"
-    },
-    {
-        title: "Tagihan",
-        category: "Keuangan",
-        description: "Sistem informasi pengelolaan tagihan dan biaya pendidikan mahasiswa (UKT, SPI, dll). Terintegrasi secara real-time dengan bank mitra untuk verifikasi pembayaran yang instan.",
-        url: "https://tagihan.upr.ac.id",
-        imageId: "1554224155-6726b3ff858f",
-        keywords: "finance, payment, banking"
-    },
-    {
-        title: "DITRACE",
-        category: "Akademik",
-        description: "Sistem informasi Tracer Study untuk melacak karir dan umpan balik alumni UPR. Penting untuk akreditasi kampus dan peningkatan kualitas kurikulum berdasarkan serapan dunia kerja.",
-        url: "https://ditrace.upr.ac.id",
-        imageId: "1460925895917-afdab827c52f",
-        keywords: "career, analytics, growth"
-    },
-    {
-        title: "SINTAM",
-        category: "Akademik",
-        description: "Sistem Informasi Tugas Akhir Mahasiswa untuk manajemen bimbingan skripsi dan tesis. Memantau progres penelitian, jadwal sidang, hingga revisi akhir secara digital.",
-        url: "https://sintam.upr.ac.id",
-        imageId: "1456513080510-7bf3a84b82f8",
-        keywords: "research, book, library"
-    },
-    {
-        title: "E-NUM",
-        category: "Institusi",
-        description: "Aplikasi penomoran surat kedinasan elektronik yang terstruktur dan terpusat. Mengurangi duplikasi nomor surat dan memudahkan pelacakan arsip korespondensi universitas.",
-        url: "https://e-num.upr.ac.id",
-        imageId: "1586769852044-692d6e3703f0",
-        keywords: "document, administration, folder"
-    },
-    {
-        title: "Kerjasama",
-        category: "Institusi",
-        description: "Sistem Informasi Kerjasama (Sikerma) Universitas Palangka Raya. Mencatat MoU, MoA, dan IA dengan mitra nasional maupun internasional untuk pemantauan implementasi kerja sama.",
-        url: "https://kerjasama.upr.ac.id",
-        imageId: "1521737604893-d14cc237f11d",
-        keywords: "partnership, handshake, global"
-    },
-    {
-        title: "Portal Ortu",
-        category: "Akademik",
-        description: "Portal informasi akademik yang dikhususkan bagi orang tua atau wali mahasiswa untuk memantau nilai (KHS), kehadiran, dan status pembayaran pendidikan anak secara real-time.",
-        url: "https://si-ortu.upr.ac.id",
-        imageId: "1491438590914-bc09fcaaf77a",
-        keywords: "family, secure, monitoring"
-    },
-    {
-        title: "Logbook",
-        category: "Akademik",
-        description: "Pencatatan kegiatan harian bagi mahasiswa yang mengikuti program maupun magang. Mendukung sinkronisasi data untuk program MBKM (Merdeka Belajar Kampus Merdeka).",
-        url: "https://logbook.upr.ac.id",
-        imageId: "1517842645767-c639042777db",
-        keywords: "activity, journal, notebook"
-    },
-    {
-        title: "Panduan",
-        category: "Institusi",
-        description: "Knowledge Base dan pusat panduan penggunaan aplikasi-aplikasi di lingkungan UPR. Berisi video tutorial dan dokumentasi PDF untuk memudahkan user mengadaptasi sistem.",
-        url: "https://panduan.upr.ac.id",
-        imageId: "1521791136064-7986c2923216",
-        keywords: "help, guide, support"
-    },
-    {
-        title: "ShortURL",
-        category: "Institusi",
-        description: "Layanan pemendek tautan (URL Shortener) resmi Universitas Palangka Raya dengan domain upr.ac.id, memudahkan berbagi tautan panjang secara kredibel.",
-        url: "https://shorturl.upr.ac.id",
-        imageId: "1558486012-817176f84c6d",
-        keywords: "link, network, global"
-    },
-    {
-        title: "SSO",
-        category: "Institusi",
-        description: "Single Sign On (SSO) untuk akses terpadu. Cukup satu akun (@upr.ac.id) untuk mengakses seluruh ekosistem aplikasi di lingkungan Universitas Palangka Raya.",
-        url: "#",
-        imageId: "1555066931-4365d14bab8c",
-        keywords: "security, authentication, lock"
-    },
-    {
-        title: "SIRIP",
-        category: "Institusi",
-        description: "Sistem Informasi Riwayat Pangkat dan Jabatan staf Universitas Palangka Raya. Mengelola database kepegawaian, kenaikan jabatan, dan riwayat pelatihan staf.",
-        url: "https://sirip.upr.ac.id",
-        imageId: "1450101499163-c8848c66ca85",
-        keywords: "work, analytics, data"
-    }
-];
-
-const categories = ["Semua", "Akademik", "Keuangan", "Institusi"];
+const categories = projectCategories;
 const activeCategory = ref("Semua");
 const isModalOpen = ref(false);
 const selectedProject = ref(null);
@@ -155,233 +24,42 @@ const displayLimit = ref(8);
 const isExpanded = ref(false);
 
 const filteredProjects = computed(() => {
-    if (activeCategory.value === "Semua") return projects;
+    if (activeCategory.value === 'Semua') return projects;
     return projects.filter(p => p.category === activeCategory.value);
 });
 
-// Image Fallback Engine
-const getProjectImage = (project) => {
-    // If a manual override image exists, use it
-    if (project.image && project.image.startsWith('http')) return project.image;
-    
-    // If a fixed Unsplash ID exists, use it (Most reliable & high quality)
-    if (project.imageId) {
-        return `https://images.unsplash.com/photo-${project.imageId}?auto=format&fit=crop&q=80&w=800`;
-    }
-    
-    // Otherwise, generate a dynamic URL based on keywords with Lorem Flickr (Reliable fallback)
-    const projectKeywords = project.keywords || "university";
-    return `https://loremflickr.com/800/600/technology,${projectKeywords}/all`;
-};
-
 const displayedProjects = computed(() => {
-    const list = isExpanded.value ? filteredProjects.value.slice(0, displayLimit.value) : [];
-    return list.map(p => ({
+    if (!isExpanded.value) return [];
+    return filteredProjects.value.slice(0, displayLimit.value).map(p => ({
         ...p,
-        image: getProjectImage(p)
+        image: getProjectImage(p),
     }));
 });
 
-const row1Projects = computed(() => {
-    return projects.slice(0, Math.ceil(projects.length / 2)).map(p => ({
-        ...p,
-        image: getProjectImage(p)
-    }));
-});
+const row1Projects = computed(() =>
+    projects.slice(0, Math.ceil(projects.length / 2)).map(p => ({ ...p, image: getProjectImage(p) }))
+);
 
-const row2Projects = computed(() => {
-    return projects.slice(Math.ceil(projects.length / 2)).map(p => ({
-        ...p,
-        image: getProjectImage(p)
-    }));
-});
+const row2Projects = computed(() =>
+    projects.slice(Math.ceil(projects.length / 2)).map(p => ({ ...p, image: getProjectImage(p) }))
+);
 
-const expandShowcase = () => {
-    isExpanded.value = true;
-};
+const expandShowcase = () => { isExpanded.value = true; };
 
-// Reset limit when category changes
-watch(activeCategory, () => {
-    displayLimit.value = 8;
-});
+watch(activeCategory, () => { displayLimit.value = 8; });
 
 const openProjectModal = (project) => {
     selectedProject.value = project;
     isModalOpen.value = true;
 };
 
-const faqCategories = [
-    { id: "email", label: "Email Institusi" },
-    { id: "internet", label: "Internet & WiFi" },
-    { id: "siakad", label: "SIAKAD" },
-    { id: "lab", label: "Laboratorium" },
-    { id: "bantuan", label: "Bantuan & Admin" }
-];
-const activeFaqCategory = ref("email");
+// FAQ
+const activeFaqCategory = ref('email');
+const filteredFaqs = computed(() => faqs.filter(f => f.category === activeFaqCategory.value));
 
-const faqs = [
-    // Kategori 1: Email
-    { 
-        category: "email",
-        question: "Bagaimana cara mendapatkan akun email institusi (@upr.ac.id)?", 
-        answer: "Bagi mahasiswa baru, akun dibuat secara kolektif. Untuk dosen/staf yang belum memiliki akun, silakan ajukan permohonan melalui admin TIK fakultas atau datang langsung ke Gedung UPA TIK dengan membawa SK/Kartu Identitas." 
-    },
-    { 
-        category: "email",
-        question: "Saya lupa kata sandi email, apa yang harus saya lakukan?", 
-        answer: "Anda dapat melakukan reset secara mandiri melalui form reset password resmi universitas. Silakan akses tautan tersebut untuk memulihkan akses akun Anda." 
-    },
-    { 
-        category: "email",
-        question: "Mengapa saya tidak bisa mengirim/menerima email?", 
-        answer: "Periksa sisa kuota penyimpanan email Anda. Jika penuh, hapus file atau email yang tidak diperlukan di Google Drive/Gmail karena kuota bersifat terintegrasi." 
-    },
-    // Kategori 2: Internet
-    { 
-        category: "internet",
-        question: "Bagaimana cara terhubung ke WiFi Eduroam?", 
-        answer: "Gunakan identitas email institusi (@upr.ac.id) sebagai username dan kata sandi email Anda sebagai password untuk login ke jaringan Eduroam." 
-    },
-    { 
-        category: "internet",
-        question: "Mengapa perangkat saya gagal terhubung ke Eduroam?", 
-        answer: "Lakukan 'Forget Network' pada pengaturan WiFi perangkat Anda, kemudian coba login kembali menggunakan format email lengkap. Pastikan akun email Anda dalam status aktif." 
-    },
-    { 
-        category: "internet",
-        question: "Di mana saja lokasi hotspot WiFi kampus?", 
-        answer: "Jaringan Eduroam tersedia di seluruh area gedung fakultas, rektorat, dan berbagai area publik di lingkungan Universitas Palangka Raya." 
-    },
-    // Kategori 3: SIAKAD
-    { 
-        category: "siakad",
-        question: "Muncul notifikasi 'User Terkunci' saat login SIAKAD, bagaimana solusinya?", 
-        answer: "Hal ini biasanya terjadi karena salah memasukkan password berulang kali. Silakan hubungi admin TIK di unit atau fakultas Anda untuk pembukaan blokir akses." 
-    },
-    { 
-        category: "siakad",
-        question: "Saya tidak bisa mengisi KRS di SIAKAD, apa masalahnya?", 
-        answer: "Pastikan Anda sudah menyelesaikan administrasi keuangan dan masa pengisian KRS belum berakhir sesuai dengan kalender akademik yang berlaku." 
-    },
-    // Kategori 4: Lab
-    { 
-        category: "lab",
-        question: "Bagaimana prosedur meminjam Laboratorium Komputer untuk kegiatan?", 
-        answer: "Mengajukan surat permohonan resmi kepada Kepala UPA TIK minimal 3 hari sebelum kegiatan. Pastikan jadwal tersedia melalui staf administrasi kami." 
-    },
-    { 
-        category: "lab",
-        question: "Apakah Laboratorium Komputer buka di luar jam kuliah?", 
-        answer: "Laboratorium beroperasi sesuai jadwal praktikum yang telah ditetapkan. Penggunaan mandiri oleh mahasiswa harus dengan izin resmi dari staf laboratorium." 
-    },
-    // Kategori 5: Bantuan
-    { 
-        category: "bantuan",
-        question: "Di mana lokasi kantor UPA TIK UPR?", 
-        answer: "Gedung UPA TIK terletak di komplek area kampus Universitas Palangka Raya (Kampus Tanjung Nyaho)." 
-    },
-    { 
-        category: "bantuan",
-        question: "Kapan saya bisa berkonsultasi langsung dengan staf teknis?", 
-        answer: "Layanan bantuan manual tersedia pada hari kerja (Senin-Jumat) selama jam operasional resmi kantor. Chatbot dan portal bantuan tetap melayani informasi mandiri 24/7." 
-    }
-];
-
-const filteredFaqs = computed(() => {
-    return faqs.filter(f => f.category === activeFaqCategory.value);
-});
-
-// News & Innovation Hub Logic
-const newsItems = [
-    {
-        title: "Cybersecurity Alert: Phishing Campaign Targeting University Accounts",
-        category: "Security",
-        date: "5 menit yang lalu",
-        description: "Tim keamanan siber UPA TIK mendeteksi adanya upaya phishing massal yang menargetkan email civitas akademika melalui domain palsu.",
-        imageId: "1550751827-4bd374c3f58b",
-        featured: true
-    },
-    {
-        title: "New High-Performance Computing System Launched",
-        category: "Innovation",
-        date: "2 jam yang lalu",
-        description: "UPA TIK meluncurkan kluster HPC baru untuk mendukung akselerasi penelitian berbasis data besar dan AI bagi dosen dan peneliti.",
-        imageId: "1518770660439-4636190af475",
-        featured: true
-    },
-    {
-        title: "Workshop Nasional: Implementasi Transformasi Digital di PTN",
-        category: "Event",
-        date: "1 hari yang lalu",
-        description: "Rektorat bersama UPA TIK menggelar workshop strategis mengenai percepatan digitalisasi administrasi kampus kelas dunia.",
-        imageId: "1517245386807-bb43f82c33c4"
-    },
-    {
-        title: "Migrasi Cloud Infrastructure: Peningkatan Uptime Layanan 99.9%",
-        category: "Infrastructure",
-        date: "3 hari yang lalu",
-        description: "Kami telah menyelesaikan migrasi infrastruktur ke cloud untuk memastikan seluruh sistem akademik dapat diakses kapan saja tanpa kendala.",
-        imageId: "1451187580459-43490279c0fa"
-    },
-    {
-        title: "Inovasi Mahasiswa: Aplikasi Smart Campus Berbasis AI",
-        category: "Innovation",
-        date: "1 minggu yang lalu",
-        description: "Sekelompok mahasiswa berkolaborasi dengan UPA TIK menciptakan asisten virtual cerdas untuk mempermudah pendaftaran KRS.",
-        imageId: "1581091226815-45a9d2a8a48e"
-    },
-    {
-        title: "Update Keamanan: Enkripsi End-to-End untuk Dokumen E-Sign",
-        category: "Security",
-        date: "10 hari yang lalu",
-        description: "Sistem E-Sign kini dilengkapi dengan standar enkripsi terbaru guna menjamin kerahasiaan dokumen kedinasan universitas.",
-        imageId: "1563986768609-322da13575f3"
-    },
-    {
-        title: "Peningkatan Kapasitas Bandwidth Internasional Kampus",
-        category: "Infrastructure",
-        date: "2 minggu yang lalu",
-        description: "Link internasional kampus kini ditingkatkan menjadi 10Gbps untuk mendukung riset global dan kelas virtual trans-nasional.",
-        imageId: "1544197150-5973ff0a0a55"
-    },
-    {
-        title: "Peluncuran Portal Alumni Terintegrasi DITRACE v2.0",
-        category: "Innovation",
-        date: "3 minggu yang lalu",
-        description: "DITRACE versi terbaru kini hadir dengan fitur analitik karir yang lebih tajam bagi lulusan Universitas Palangka Raya.",
-        imageId: "1460925895917-afdab827c52f"
-    },
-    {
-        title: "Sustainability Tech: Server Room UPA TIK Kini Gunakan Solar Panel",
-        category: "Infrastructure",
-        date: "1 bulan yang lalu",
-        description: "Inisiatif Green Campus dimulai dari UPA TIK dengan pemanfaatan energi terbarukan untuk mendukung operasional pusat data.",
-        imageId: "1509391366360-ec5c03204627"
-    },
-    {
-        title: "Lomba Coding Universitas 2026: Total Hadiah 50 Juta",
-        category: "Event",
-        date: "1 bulan yang lalu",
-        description: "Cari programmer terbaik kampus dalam ajang tahunan Hackathon TIK. Pendaftaran dibuka untuk seluruh fakultas.",
-        imageId: "1517694712202-14dd9538aa97"
-    },
-    {
-        title: "Integrasi SSO: Satu Akun untuk Seluruh Layanan Kampus",
-        category: "Innovation",
-        date: "2 bulan yang lalu",
-        description: "Satu akses akun G-Suite universitas kini bisa digunakan untuk login ke SIAKAD, E-Learning, dan Portal Ortu.",
-        imageId: "1555066931-4365d14bab8c"
-    },
-    {
-        title: "Pengembangan Infrastruktur Jaringan di Area Kampus Baru",
-        category: "Infrastructure",
-        date: "2 bulan yang lalu",
-        description: "Pemasangan fiber optic dan access point Eduroam di area gedung fakultas kedokteran baru telah selesai.",
-        imageId: "1558486012-817176f84c6d"
-    }
-];
-
-const newsSearchQuery = ref("");
+// News
+const newsItems = allNews;
+const newsSearchQuery = ref('');
 const newsCurrentPage = ref(1);
 const newsItemsPerPage = 6;
 const isNewsExpanded = ref(false);
@@ -389,8 +67,8 @@ const isNewsExpanded = ref(false);
 const filteredNews = computed(() => {
     if (!newsSearchQuery.value) return newsItems;
     const query = newsSearchQuery.value.toLowerCase();
-    return newsItems.filter(item => 
-        item.title.toLowerCase().includes(query) || 
+    return newsItems.filter(item =>
+        item.title.toLowerCase().includes(query) ||
         item.category.toLowerCase().includes(query) ||
         item.description.toLowerCase().includes(query)
     );
@@ -400,93 +78,71 @@ const totalNewsPages = computed(() => Math.ceil(filteredNews.value.length / news
 
 const paginatedNews = computed(() => {
     const start = (newsCurrentPage.value - 1) * newsItemsPerPage;
-    const end = start + newsItemsPerPage;
-    return filteredNews.value.slice(start, end);
+    return filteredNews.value.slice(start, start + newsItemsPerPage);
 });
-
-const getNewsImage = (item) => {
-    return `https://images.unsplash.com/photo-${item.imageId}?auto=format&fit=crop&q=80&w=800`;
-};
 
 const expandNews = () => {
     isNewsExpanded.value = true;
-    // Scroll to section for better UX
-    setTimeout(() => {
-        document.getElementById('news').scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    setTimeout(() => document.getElementById('news')?.scrollIntoView({ behavior: 'smooth' }), 100);
 };
 
-watch(newsSearchQuery, () => {
-    newsCurrentPage.value = 1;
-});
+watch(newsSearchQuery, () => { newsCurrentPage.value = 1; });
 
-// Helpdesk & Status Logic
-const helpCategories = ["Email Institusi", "Wi-Fi & Jaringan", "SIAKAD/Sistem Akademik", "Sistem Institusi", "Lainnya"];
+// Helpdesk
 const helpForm = ref({
-    name: "",
-    identity: "",
-    unit: "",
-    category: "Email Institusi",
-    description: "",
-    email: "",
-    phone: ""
+    name: '',
+    identity: '',
+    unit: '',
+    category: 'Email Institusi',
+    description: '',
+    email: '',
+    phone: '',
 });
 const isSubmitting = ref(false);
 const formSubmitted = ref(false);
 
-const systemStatusMap = ref({});
-
-const checkSystems = async () => {
-    // Collect all URLs to check from projects
-    const urlsToCheck = projects.map(p => p.url).filter(url => url && url !== '#');
-    
-    try {
-        // Send batch request to our backend monitoring engine
-        const response = await axios.get('/api/status-check', {
-            params: { urls: urlsToCheck }
-        });
-        
-        const results = response.data;
-        
-        // Map backend results back to project titles
-        projects.forEach(p => {
-            if (!p.url || p.url === '#') {
-                systemStatusMap.value[p.title] = "maintenance";
-            } else {
-                systemStatusMap.value[p.title] = results[p.url] || "issue";
-            }
-        });
-    } catch (e) {
-        console.error("Status monitoring failed:", e);
-        // Fallback to error state for all URLs if API fails
-        projects.forEach(p => {
-            if (!p.url || p.url === '#') {
-                systemStatusMap.value[p.title] = "maintenance";
-            } else {
-                systemStatusMap.value[p.title] = "issue";
-            }
-        });
-    }
-};
-
 const submitHelpForm = () => {
     isSubmitting.value = true;
-    // Simulate API call
     setTimeout(() => {
         isSubmitting.value = false;
         formSubmitted.value = true;
     }, 1500);
 };
 
+// System Status Monitor
+const systemStatusMap = ref({});
+let statusInterval = null;
+
+const checkSystems = async () => {
+    const urlsToCheck = projects.map(p => p.url).filter(url => url && url !== '#');
+
+    try {
+        const response = await axios.get('/api/status-check', {
+            params: { urls: urlsToCheck },
+        });
+
+        const results = response.data;
+
+        projects.forEach(p => {
+            systemStatusMap.value[p.title] = (!p.url || p.url === '#')
+                ? 'maintenance'
+                : (results[p.url] ?? 'issue');
+        });
+    } catch {
+        projects.forEach(p => {
+            systemStatusMap.value[p.title] = (!p.url || p.url === '#') ? 'maintenance' : 'issue';
+        });
+    }
+};
+
 onMounted(() => {
-    // Initialize all to checking state
-    projects.forEach(p => systemStatusMap.value[p.title] = "checking");
-    
-    // Perform initial check
+    projects.forEach(p => { systemStatusMap.value[p.title] = 'checking'; });
     checkSystems();
-    
-    // Poll every 15 minutes for accurate backend-driven status
-    setInterval(checkSystems, 15 * 60 * 1000);
+    statusInterval = setInterval(checkSystems, 15 * 60 * 1000);
+});
+
+onUnmounted(() => {
+    clearInterval(statusInterval);
 });
 </script>
 
@@ -849,11 +505,13 @@ onMounted(() => {
                     <Transition name="fade-scale" mode="out-in">
                         <!-- Summary View (Initial) -->
                         <div v-if="!isNewsExpanded" key="summary" class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            <div 
+                            <Link 
                                 v-for="(news, index) in newsItems.filter(n => n.featured).slice(0, 2)" 
-                                :key="news.title"
-                                class="group cursor-pointer animate-fade-in-up"
+                                :key="news.slug"
+                                :href="route('news.show', { slug: news.slug })"
+                                class="group cursor-pointer animate-fade-in-up block"
                                 :style="`animation-delay: ${index * 0.1}s`"
+                                prefetch
                             >
                                 <div class="relative overflow-hidden rounded-[2.5rem] mb-8 shadow-lg group-hover:shadow-2xl transition-all duration-500">
                                     <img :src="getNewsImage(news)" class="w-full h-[350px] object-cover group-hover:scale-110 transition-transform duration-700 font-display" />
@@ -869,7 +527,7 @@ onMounted(() => {
                                     <Calendar class="w-4 h-4 mr-2" />
                                     <span>{{ news.date }}</span>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
                         <!-- Full List View (Paginated) -->
@@ -879,10 +537,12 @@ onMounted(() => {
                                 tag="div"
                                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                             >
-                                <div 
+                                <Link 
                                     v-for="news in paginatedNews" 
-                                    :key="news.title"
-                                    class="bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 p-4 hover:shadow-2xl hover:border-primary/20 transition-all duration-500 group cursor-pointer"
+                                    :key="news.slug"
+                                    :href="route('news.show', { slug: news.slug })"
+                                    class="bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 p-4 hover:shadow-2xl hover:border-primary/20 transition-all duration-500 group cursor-pointer block"
+                                    prefetch
                                 >
                                     <div class="relative overflow-hidden rounded-2xl mb-6 aspect-video">
                                         <img :src="getNewsImage(news)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -895,10 +555,10 @@ onMounted(() => {
                                         <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-3 mb-6 leading-relaxed">{{ news.description }}</p>
                                         <div class="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest border-t border-slate-50 dark:border-slate-700/50 pt-4">
                                             <span class="flex items-center"><Calendar class="w-3 h-3 mr-1.5" /> {{ news.date }}</span>
-                                            <span class="text-primary flex items-center group-hover:translate-x-1 transition-transform cursor-pointer">Baca <ChevronRight class="w-3 h-3 ml-0.5" /></span>
+                                            <span class="text-primary flex items-center group-hover:translate-x-1 transition-transform">Baca <ChevronRight class="w-3 h-3 ml-0.5" /></span>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             </TransitionGroup>
 
                             <!-- Empty State -->

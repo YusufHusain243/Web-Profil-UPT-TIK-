@@ -2,29 +2,28 @@
 
 use App\Http\Controllers\AppStatusController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/api/status-check', [AppStatusController::class, 'check'])->name('api.status.check');
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Welcome');
 })->name('home');
 
 Route::get('/organization', function () {
-    return Inertia::render('Organization', [
-    ]);
+    return Inertia::render('Organization');
 })->name('organization');
 
 Route::get('/partners', function () {
-    return Inertia::render('Partners', [
-    ]);
+    return Inertia::render('Partners');
 })->name('partners');
+
+Route::get('/berita/{slug}', function (string $slug) {
+    return Inertia::render('News/Show', [
+        'slug' => $slug,
+    ]);
+})->name('news.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
